@@ -1,0 +1,25 @@
+{
+	"name": "hypejunction/prototyper_group",
+	"type": "elgg-plugin",
+	"description": "hypePrototyper integration for Elgg group profiles",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"elgg", "plugin", "profile", "groups", "form builder", "prototyper"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "info@hypejunction.com"
+		}
+	],
+	"require-dev": {
+		"composer/installers": "1.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"": "classes/"
+		}
+	}
+}
+
