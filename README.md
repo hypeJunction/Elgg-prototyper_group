@@ -5,8 +5,6 @@ Group Profile Prototyper for Elgg
 ## Features
 
  * Integration with hypePrototyper for easy group form field management
+ * Support for multiple group subtypes
 
-![Prototyper](https://raw.github.com/hypeJunction/Elgg-prototyper_group/master/screenshots/prototyper-profile.png "Profile Prototyper")
-
-## Usage
-
+![Prototyper](https://raw.github.com/hypeJunction/Elgg-prototyper_group/master/screenshots/group_prototype.png "Group Field Prototyper")
