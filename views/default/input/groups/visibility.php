@@ -9,6 +9,7 @@ $visibility_options = [
 $entity = elgg_extract('entity', $vars);
 if ($entity->group_acl) {
 	unset($visibility_options[ACCESS_PRIVATE]);
+	$visibility_options[$entity->group_acl] = elgg_echo('groups:access:group');
 }
 
 if (elgg_get_config("walled_garden")) {
