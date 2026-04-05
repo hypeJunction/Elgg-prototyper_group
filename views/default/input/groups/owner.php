@@ -9,6 +9,7 @@ if ($entity->owner_guid != elgg_get_logged_in_user_guid() && !elgg_is_admin_logg
 }
 $members = [];
 $dbprefix = elgg_get_config('dbprefix');
+// WARNING: users_entity subtable removed in Elgg 3.0 — rewrite this SQL
 $options = ["type" => "user", "relationship" => "member", "relationship_guid" => $entity->getGUID(), "inverse_relationship" => true, "limit" => false, "callback" => false, "joins" => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"], "selects" => ['ue.*'], "order_by" => 'ue.name ASC'];
 $batch = new ElggBatch("elgg_get_entities", $options);
 foreach ($batch as $member) {
