@@ -3,9 +3,8 @@
 $guid = get_input('guid');
 $group = get_entity($guid);
 
-if (!$group instanceof ElggGroup && elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !$user->isAdmin()) {
-	register_error(elgg_echo("groups:cantcreate"));
-	forward(REFERER);
+if (!$group instanceof ElggGroup && elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !elgg_get_logged_in_user_entity()->isAdmin()) {
+	return elgg_error_response(elgg_echo("groups:cantcreate"));
 }
 
 if (!$group instanceof ElggGroup) {
@@ -20,8 +19,7 @@ if (!$group instanceof ElggGroup) {
 }
 
 if (!$group->canEdit()) {
-	register_error(elgg_echo("groups:cantedit"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo("groups:cantedit"));
 }
 
 $is_new_group = empty($group->guid);
@@ -32,21 +30,14 @@ try {
 		$group = $action->update();
 	}
 } catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
-	register_error(elgg_echo('prototyper:validate:error'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('prototyper:validate:error'));
 } catch (\IOException $ex) {
-	register_error(elgg_echo('prototyper:io:error', [$ex->getMessage()]));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('prototyper:io:error', [$ex->getMessage()]));
 } catch (\Exception $ex) {
-	register_error(elgg_echo('prototyper:handle:error', [$ex->getMessage()]));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('prototyper:handle:error', [$ex->getMessage()]));
 }
 
 if ($group) {
-	if (elgg_is_xhr()) {
-		echo $action->result->output;
-	}
-
 	if ($is_new_group) {
 		elgg_set_page_owner_guid($group->guid);
 		$group->join($group->getOwnerEntity());
@@ -58,9 +49,7 @@ if ($group) {
 		]);
 	}
 
-	system_message(elgg_echo('groups:saved'));
-	forward($group->getURL());
+	return elgg_ok_response('', elgg_echo('groups:saved'), $group->getURL());
 } else {
-	register_error(elgg_echo('groups:save_error'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('groups:save_error'));
 }

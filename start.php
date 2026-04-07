@@ -1,19 +1,9 @@
 <?php
 
-/**
- * Group Fields Prototyper
- *
- * @author Ismayil Khayredinov <info@hypejunction.com>
- * @copyright Copyright (c) 2015, Ismayil Khayredinov
- */
 require_once __DIR__ . '/autoloader.php';
 
 elgg_register_event_handler('init', 'system', 'prototyper_group_init');
 
-/**
- * Initialize the plugin
- * @return void
- */
 function prototyper_group_init() {
 
 	elgg_register_admin_menu_item('configure', 'group_fields', 'appearance', 40);
@@ -23,20 +13,11 @@ function prototyper_group_init() {
 
 	elgg_register_plugin_hook_handler('prototype', 'groups/edit', 'prototyper_group_get_prototype_fields');
 
-	elgg_get_plugin_setting('profile:fields', 'group', 'prototyper_group_get_config_fields');
+	elgg_register_plugin_hook_handler('profile:fields', 'group', 'prototyper_group_get_config_fields');
 
 	elgg_extend_view('prototyper/elements/submit', 'groups/delete');
 }
 
-/**
- * Returns prototyped fields
- *
- * @param string $hook   "prototype"
- * @param string $type   "groups/edit"
- * @param array  $return Fields
- * @param array  $params Hook params
- * @return array
- */
 function prototyper_group_get_prototype_fields($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
@@ -83,7 +64,6 @@ function prototyper_group_get_prototype_fields($hook, $type, $return, $params) {
 		}
 	}
 
-	// Not adding these above, as we want them to persist, even if they are deleted from the UI
 	$return['name'] = [
 		'type' => 'name',
 		'data_type' => 'attribute',
@@ -109,7 +89,6 @@ function prototyper_group_get_prototype_fields($hook, $type, $return, $params) {
 		'priority' => 900,
 	];
 
-	// treating this as metadata so that it gets handled after the entity has been saved once and group_acl has been created
 	$return['vis'] = [
 		'type' => 'access',
 		'data_type' => 'metadata',
@@ -165,15 +144,6 @@ function prototyper_group_get_prototype_fields($hook, $type, $return, $params) {
 	return $return;
 }
 
-/**
- * Populates the profile fields config with prototyped values
- *
- * @param string $hook   "prototype"
- * @param string $type   "groups/edit"
- * @param array  $return Fields
- * @param array  $params Hook params
- * @return array
- */
 function prototyper_group_get_config_fields($hook, $type, $return, $params) {
 
 	$subtype = elgg_extract('subtype', $params);
@@ -184,10 +154,8 @@ function prototyper_group_get_config_fields($hook, $type, $return, $params) {
 	$fields = hypePrototyper()->prototype->fields($group, 'groups/edit');
 
 	foreach ($fields as $field) {
-		/* @var $field \hypeJunction\Prototyper\Elements\Field */
 
 		if ($field->getDataType() !== 'metadata') {
-			// only add metadata fields
 			continue;
 		}
 
