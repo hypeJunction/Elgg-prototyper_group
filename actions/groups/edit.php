@@ -31,7 +31,7 @@ try {
 	}
 } catch (\hypeJunction\Exceptions\ActionValidationException $ex) {
 	return elgg_error_response(elgg_echo('prototyper:validate:error'));
-} catch (\IOException $ex) {
+} catch (\Elgg\Exceptions\FileSystem\IOException $ex) {
 	return elgg_error_response(elgg_echo('prototyper:io:error', [$ex->getMessage()]));
 } catch (\Exception $ex) {
 	return elgg_error_response(elgg_echo('prototyper:handle:error', [$ex->getMessage()]));
