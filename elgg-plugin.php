@@ -1,8 +1,6 @@
 <?php
 
 return [
-	'bootstrap' => \hypeJunction\Prototyper\Groups\Bootstrap::class,
-
 	'actions' => [
 		'groups/prototype' => [
 			'access' => 'admin',
