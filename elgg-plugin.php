@@ -1,6 +1,14 @@
 <?php
 
 return [
+	'plugin' => [
+		'dependencies' => [
+			'hypeprototyper' => [
+				'position' => 'after',
+			],
+		],
+	],
+
 	'actions' => [
 		'groups/prototype' => [
 			'access' => 'admin',

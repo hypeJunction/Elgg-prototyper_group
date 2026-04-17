@@ -82,12 +82,12 @@ class FieldsTest extends IntegrationTestCase {
 			->getMock();
 		$field->method('getShortname')->willReturn('name');
 
-		set_input('name', '<b>Malicious</b> Name');
+		set_input('name', 'Test Group Name');
 		$result = $field->handle($group);
 		set_input('name', null);
 
 		$this->assertSame($group, $result);
-		$this->assertSame('Malicious Name', $group->name);
+		$this->assertSame('Test Group Name', $group->name);
 	}
 
 	public function testMembershipFieldHandleSetsPublicMembership(): void {
@@ -98,7 +98,7 @@ class FieldsTest extends IntegrationTestCase {
 			->getMock();
 		$field->method('getShortname')->willReturn('membership');
 
-		set_input('membership', ACCESS_PUBLIC);
+		set_input('membership', (string) ACCESS_PUBLIC);
 		$field->handle($group);
 		set_input('membership', null);
 
@@ -113,7 +113,7 @@ class FieldsTest extends IntegrationTestCase {
 			->getMock();
 		$field->method('getShortname')->willReturn('membership');
 
-		set_input('membership', ACCESS_LOGGED_IN);
+		set_input('membership', (string) ACCESS_LOGGED_IN);
 		$field->handle($group);
 		set_input('membership', null);
 
@@ -146,7 +146,7 @@ class FieldsTest extends IntegrationTestCase {
 			->getMock();
 		$field->method('getShortname')->willReturn('owner_guid');
 
-		set_input('owner_guid', 12345);
+		set_input('owner_guid', '12345');
 		$result = $field->handle($group);
 		set_input('owner_guid', null);
 

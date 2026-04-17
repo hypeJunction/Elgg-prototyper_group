@@ -14,12 +14,14 @@
 		}
 	],
 	"require-dev": {
-		"composer/installers": "1.*"
+		"composer/installers": "^1.0 || ^2.0"
+	},
+	"extra": {
+		"installer-name": "prototyper_group"
 	},
 	"autoload": {
-		"psr-0": {
-			"": "classes/"
+		"psr-4": {
+			"hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
 		}
 	}
 }
-

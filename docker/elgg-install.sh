@@ -71,12 +71,52 @@ SETTINGS_VALUES
         echo 'Elgg 4.x installed successfully.' . PHP_EOL;
     " 2>&1 || echo "Install completed (check for errors above)."
 
-    echo "Activating plugin: ${PLUGIN_ID}"
+    echo "Activating plugins..."
     php -r "
         require_once 'vendor/autoload.php';
         \$app = \Elgg\Application::getInstance();
         \$app->bootCore();
         _elgg_services()->plugins->generateEntities();
+
+        // Symlink core plugins from vendor into mod/ so dependency checks resolve.
+        \$coreModDir = '/var/www/html/vendor/elgg/elgg/mod';
+        \$modDir = '/var/www/html/mod';
+        if (is_dir(\$coreModDir)) {
+            foreach (scandir(\$coreModDir) as \$item) {
+                if (\$item === '.' || \$item === '..') continue;
+                \$target = \$modDir . '/' . \$item;
+                if (!file_exists(\$target)) {
+                    symlink(\$coreModDir . '/' . \$item, \$target);
+                }
+            }
+        }
+        _elgg_services()->plugins->generateEntities();
+
+        // Fixed-point activation: retry until no progress is made.
+        // This handles transitive dep chains of arbitrary depth.
+        \$maxPasses = 20;
+        \$pass = 0;
+        do {
+            \$progress = false;
+            \$plugins = elgg_get_plugins('inactive');
+            foreach (\$plugins as \$p) {
+                if (\$p->getID() === '${PLUGIN_ID}') {
+                    continue; // activate main plugin last
+                }
+                \$p->setPriority('last');
+                try {
+                    if (\$p->activate()) {
+                        echo 'Activated dep: ' . \$p->getID() . PHP_EOL;
+                        \$progress = true;
+                    }
+                } catch (\Throwable \$e) {
+                    // dep not ready yet — will retry next pass
+                }
+            }
+            \$pass++;
+        } while (\$progress && \$pass < \$maxPasses);
+
+        // Activate the main plugin.
         \$plugin = elgg_get_plugin_from_id('${PLUGIN_ID}');
         if (!\$plugin) {
             echo 'ERROR: plugin ${PLUGIN_ID} not found at /var/www/html/mod/${PLUGIN_ID}' . PHP_EOL;
@@ -85,6 +125,7 @@ SETTINGS_VALUES
         if (\$plugin->isActive()) {
             echo 'Plugin ${PLUGIN_ID} already active.' . PHP_EOL;
         } else {
+            \$plugin->setPriority('last');
             try {
                 \$plugin->activate();
                 echo 'Plugin ${PLUGIN_ID} activated.' . PHP_EOL;
@@ -93,6 +134,9 @@ SETTINGS_VALUES
                 exit(1);
             }
         }
+
+        // Clear system cache after all activations.
+        elgg_reset_system_cache();
     " 2>&1 || echo "Plugin activation completed (check for errors above)."
 
     touch /var/www/html/.elgg-installed

@@ -2,7 +2,7 @@
 
 namespace PrototyperGroups;
 
-use Elgg\Hook;
+use Elgg\HooksRegistrationService\Hook;
 use Elgg\IntegrationTestCase;
 use hypeJunction\Prototyper\Groups\Hooks;
 
@@ -30,16 +30,7 @@ class HooksTest extends IntegrationTestCase {
 	 * Build a mock \Elgg\Hook with the given value and params.
 	 */
 	protected function makeHook(array $value, array $params = []): Hook {
-		$hook = $this->getMockBuilder(Hook::class)->getMock();
-		$hook->method('getValue')->willReturn($value);
-		$hook->method('getParams')->willReturn($params);
-		$hook->method('getParam')->willReturnCallback(function ($key, $default = null) use ($params) {
-			return array_key_exists($key, $params) ? $params[$key] : $default;
-		});
-		$hook->method('getEntityParam')->willReturn($params['entity'] ?? null);
-		$hook->method('getName')->willReturn('prototype');
-		$hook->method('getType')->willReturn('groups/edit');
-		return $hook;
+		return new Hook(elgg(), 'prototype', 'groups/edit', $value, $params);
 	}
 
 	public function testGetPrototypeFieldsAddsCoreGroupFields(): void {
@@ -151,7 +142,7 @@ class HooksTest extends IntegrationTestCase {
 			$this->markTestSkipped('hypePrototyper plugin not active.');
 			return;
 		}
-		$hook = $this->makeHook(['title' => 'text'], ['subtype' => null]);
+		$hook = $this->makeHook(['title' => 'text'], ['subtype' => '']);
 
 		$result = Hooks::getConfigFields($hook);
 		$this->assertIsArray($result);

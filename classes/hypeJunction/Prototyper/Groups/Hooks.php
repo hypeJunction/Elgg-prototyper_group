@@ -45,7 +45,7 @@ class Hooks {
 				'help' => false,
 			];
 
-			foreach ($fields as $shortname => $input_type) {
+			foreach ((array) $fields as $shortname => $input_type) {
 				$return[$shortname] = [
 					'type' => $input_type,
 					'data_type' => 'metadata',
@@ -146,10 +146,10 @@ class Hooks {
 	public static function getConfigFields(\Elgg\Hook $hook) {
 		$return = $hook->getValue();
 
-		$subtype = $hook->getParam('subtype');
+		$subtype = (string) $hook->getParam('subtype');
 		$group = \hypePrototyper()->entityFactory->build([
 			'type' => 'group',
-			'subtype' => $subtype ?: ELGG_ENTITIES_ANY_VALUE,
+			'subtype' => $subtype,
 		]);
 		$fields = \hypePrototyper()->prototype->fields($group, 'groups/edit');
 
