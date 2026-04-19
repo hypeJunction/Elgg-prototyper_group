@@ -4,7 +4,12 @@
 	"description": "hypePrototyper integration for Elgg group profiles",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "profile", "groups", "form builder", "prototyper"
+		"elgg",
+		"plugin",
+		"profile",
+		"groups",
+		"form builder",
+		"prototyper"
 	],
 	"license": "GPL-2.0",
 	"authors": [
@@ -17,11 +22,24 @@
 		"composer/installers": "^1.0 || ^2.0"
 	},
 	"extra": {
-		"installer-name": "prototyper_group"
+		"installer-name": "prototyper_group",
+		"elgg-plugin": {
+			"id": "prototyper_group"
+		}
 	},
 	"autoload": {
 		"psr-4": {
 			"hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
+		}
+	},
+	"require": {
+		"php": ">=7.4",
+		"elgg/elgg": "^4.0",
+		"composer/installers": "^2.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
 		}
 	}
 }
