@@ -2,6 +2,7 @@
 
 return [
 	'plugin' => [
+		'version' => '4.0.0',
 		'dependencies' => [
 			'hypeprototyper' => [
 				'position' => 'after',
