@@ -7,10 +7,10 @@ class Hooks {
 	/**
 	 * Populate prototype fields for group edit form
 	 *
-	 * @param \Elgg\Hook $hook 'prototype', 'groups/edit'
+	 * @param \Elgg\Event $hook 'prototype', 'groups/edit'
 	 * @return array
 	 */
-	public static function getPrototypeFields(\Elgg\Hook $hook) {
+	public static function getPrototypeFields(\Elgg\Event $hook) {
 		$return = $hook->getValue();
 
 		$entity = $hook->getParam('entity');
@@ -22,7 +22,8 @@ class Hooks {
 		}
 
 		if ($prototype) {
-			$prototype_fields = unserialize($prototype);
+			// JSON-encoded since 5.x upgrade; fall back to unserialize for data migrated before the upgrade ran
+		$prototype_fields = json_decode($prototype, true) ?? @unserialize($prototype) ?? [];
 			$return = array_merge($return, $prototype_fields);
 		} else {
 			$fields = \elgg_get_config('group');
@@ -140,10 +141,10 @@ class Hooks {
 	/**
 	 * Provide group profile fields from prototype config
 	 *
-	 * @param \Elgg\Hook $hook 'fields', 'group:group'
+	 * @param \Elgg\Event $hook 'fields', 'group:group'
 	 * @return array
 	 */
-	public static function getConfigFields(\Elgg\Hook $hook) {
+	public static function getConfigFields(\Elgg\Event $hook) {
 		$return = $hook->getValue();
 
 		$subtype = (string) $hook->getParam('subtype');

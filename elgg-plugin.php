@@ -2,7 +2,7 @@
 
 return [
 	'plugin' => [
-		'version' => '4.0.0',
+		'version' => '5.0.0',
 		'dependencies' => [
 			'hypeprototyper' => [
 				'position' => 'after',
@@ -17,7 +17,7 @@ return [
 		'groups/edit' => [],
 	],
 
-	'hooks' => [
+	'events' => [
 		'prototype' => [
 			'groups/edit' => [
 				\hypeJunction\Prototyper\Groups\Hooks::class . '::getPrototypeFields' => [],
@@ -28,6 +28,10 @@ return [
 				\hypeJunction\Prototyper\Groups\Hooks::class . '::getConfigFields' => [],
 			],
 		],
+	],
+
+	'upgrades' => [
+		\hypeJunction\Prototyper\Groups\Upgrade\MigratePrototypesToJson::class,
 	],
 
 	'view_extensions' => [

@@ -32,7 +32,7 @@ class PluginRegistrationTest extends IntegrationTestCase {
 		$spec = require $file;
 		$this->assertIsArray($spec);
 		$this->assertArrayHasKey('actions', $spec);
-		$this->assertArrayHasKey('hooks', $spec);
+		$this->assertArrayHasKey('events', $spec);
 		$this->assertArrayHasKey('view_extensions', $spec);
 	}
 
@@ -49,12 +49,12 @@ class PluginRegistrationTest extends IntegrationTestCase {
 	/**
      * @return void
      */
-    public function testHooksRegistered(): void {
+    public function testEventsRegistered(): void {
 		$spec = require dirname(__DIR__, 4) . '/elgg-plugin.php';
-		$this->assertArrayHasKey('prototype', $spec['hooks']);
-		$this->assertArrayHasKey('groups/edit', $spec['hooks']['prototype']);
-		$this->assertArrayHasKey('fields', $spec['hooks']);
-		$this->assertArrayHasKey('group:group', $spec['hooks']['fields']);
+		$this->assertArrayHasKey('prototype', $spec['events']);
+		$this->assertArrayHasKey('groups/edit', $spec['events']['prototype']);
+		$this->assertArrayHasKey('fields', $spec['events']);
+		$this->assertArrayHasKey('group:group', $spec['events']['fields']);
 	}
 
 	/**

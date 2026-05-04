@@ -2,14 +2,14 @@
 
 namespace PrototyperGroups;
 
-use Elgg\HooksRegistrationService\Hook;
+use Elgg\Event;
 use Elgg\IntegrationTestCase;
 use hypeJunction\Prototyper\Groups\Hooks;
 
 /**
  * Tests for hypeJunction\Prototyper\Groups\Hooks.
  *
- * These tests mock \Elgg\Hook (interface) and verify the handlers
+ * These tests use \Elgg\Event (concrete class in 5.x) and verify the handlers
  * assemble the expected field specification arrays. They do not
  * exercise hypePrototyper() runtime calls — getConfigFields is
  * covered separately with a skip when hypePrototyper is unavailable.
@@ -30,10 +30,10 @@ class HooksTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * Build a mock \Elgg\Hook with the given value and params.
+	 * Build an \Elgg\Event with the given value and params.
 	 */
-	protected function makeHook(array $value, array $params = []): Hook {
-		return new Hook(elgg(), 'prototype', 'groups/edit', $value, $params);
+	protected function makeHook(array $value, array $params = []): Event {
+		return new Event(elgg(), 'prototype', 'groups/edit', $value, $params);
 	}
 
 	/**
@@ -126,7 +126,7 @@ class HooksTest extends IntegrationTestCase {
 				'data_type' => 'metadata',
 			],
 		];
-		$plugin->setSetting('prototype:default', serialize($stored));
+		$plugin->setSetting('prototype:default', json_encode($stored));
 
 		try {
 			$group = new \ElggGroup();
