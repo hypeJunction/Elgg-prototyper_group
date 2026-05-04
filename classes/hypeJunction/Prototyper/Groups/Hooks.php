@@ -2,6 +2,9 @@
 
 namespace hypeJunction\Prototyper\Groups;
 
+/**
+ * Event handlers for prototyper group integration.
+ */
 class Hooks {
 
 	/**
@@ -23,7 +26,7 @@ class Hooks {
 
 		if ($prototype) {
 			// JSON-encoded since 5.x upgrade; fall back to unserialize for data migrated before the upgrade ran
-		$prototype_fields = json_decode($prototype, true) ?? @unserialize($prototype) ?? [];
+			$prototype_fields = json_decode($prototype, true) ?? @unserialize($prototype) ?? [];
 			$return = array_merge($return, $prototype_fields);
 		} else {
 			$fields = \elgg_get_config('group');
@@ -32,7 +35,7 @@ class Hooks {
 				'type' => 'icon',
 				'data_type' => 'file',
 				'label' => [
-					\get_current_language() => \elgg_echo('groups:icon'),
+					\elgg_get_current_language() => \elgg_echo('groups:icon'),
 				],
 				'help' => false,
 			];
@@ -41,7 +44,7 @@ class Hooks {
 				'type' => 'description',
 				'data_type' => 'attribute',
 				'label' => [
-					\get_current_language() => \elgg_echo('groups:description'),
+					\elgg_get_current_language() => \elgg_echo('groups:description'),
 				],
 				'help' => false,
 			];
@@ -51,7 +54,7 @@ class Hooks {
 					'type' => $input_type,
 					'data_type' => 'metadata',
 					'label' => [
-						\get_current_language() => \elgg_echo("groups:$shortname"),
+						\elgg_get_current_language() => \elgg_echo("groups:$shortname"),
 					],
 					'help' => false,
 				];
@@ -63,7 +66,7 @@ class Hooks {
 			'data_type' => 'attribute',
 			'class_name' => NameField::class,
 			'label' => [
-				\get_current_language() => \elgg_echo('groups:name'),
+				\elgg_get_current_language() => \elgg_echo('groups:name'),
 			],
 			'help' => false,
 			'priority' => 1,
@@ -77,7 +80,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => MembershipField::class,
 			'label' => [
-				\get_current_language() => \elgg_echo("groups:membership"),
+				\elgg_get_current_language() => \elgg_echo('groups:membership'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -91,7 +94,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => VisibilityField::class,
 			'label' => [
-				\get_current_language() => \elgg_echo("groups:visibility"),
+				\elgg_get_current_language() => \elgg_echo('groups:visibility'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -105,7 +108,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => ContentAccessModeField::class,
 			'label' => [
-				\get_current_language() => \elgg_echo("groups:content_access_mode"),
+				\elgg_get_current_language() => \elgg_echo('groups:content_access_mode'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -118,7 +121,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => OwnerField::class,
 			'label' => [
-				\get_current_language() => \elgg_echo("groups:owner"),
+				\elgg_get_current_language() => \elgg_echo('groups:owner'),
 			],
 			'help' => false,
 			'priority' => 900,

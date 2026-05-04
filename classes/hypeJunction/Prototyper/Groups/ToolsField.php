@@ -5,18 +5,21 @@ namespace hypeJunction\Prototyper\Groups;
 use ElggEntity;
 use hypeJunction\Prototyper\Elements\MetadataField;
 
+/**
+ * Group tools/widgets field handler.
+ */
 class ToolsField extends MetadataField {
 
 	/**
-     * @param ElggEntity $entity
-     * @return mixed
-     */
-    public function getValues(ElggEntity $entity) {
-		$values = array();
+	 * @param ElggEntity $entity Entity to get values from
+	 * @return mixed
+	 */
+	public function getValues(ElggEntity $entity) {
+		$values = [];
 		$tools = elgg_get_config('group_tool_options');
 		if ($tools) {
 			foreach ($tools as $tool) {
-				$option_name = $tool->name . "_enable";
+				$option_name = $tool->name . '_enable';
 				if (isset($entity->$option_name)) {
 					$values[$option_name] = $entity->$option_name;
 				} else {
@@ -30,13 +33,15 @@ class ToolsField extends MetadataField {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @param ElggEntity $entity Entity being edited
 	 */
 	public function handle(ElggEntity $entity) {
 		// Set group tool options
 		$tools = elgg_get_config('group_tool_options');
 		if ($tools) {
 			foreach ($tools as $tool) {
-				$option_toggle_name = $tool->name . "_enable";
+				$option_toggle_name = $tool->name . '_enable';
 				$option_default = $tool->default_on ? 'yes' : 'no';
 				$value = get_input($option_toggle_name);
 
@@ -48,7 +53,7 @@ class ToolsField extends MetadataField {
 				$entity->$option_toggle_name = $value ? $value : $option_default;
 			}
 		}
+
 		return $entity;
 	}
-
 }

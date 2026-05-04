@@ -18,7 +18,6 @@ array_unshift($group_subtypes, 'default');
 $context = elgg_extract('filter_context', $vars, 'default');
 
 foreach ($group_subtypes as $subtype) {
-
 	elgg_register_menu_item('filter', [
 		'name' => $subtype,
 		'text' => $subtype === 'default' ? elgg_echo('groups:fields:default') : elgg_echo("item:group:$subtype"),

@@ -8,6 +8,7 @@ foreach ($registered_subtypes as $type => $subtypes) {
 		break;
 	}
 }
+
 array_unshift($group_subtypes, 'default');
 
 $subtype = get_input('subtype', $group_subtypes[0]);
@@ -18,7 +19,7 @@ echo elgg_view('admin/appearance/group_fields/filter', [
 
 echo elgg_view_form('prototyper/edit', [
 	'action' => '/action/groups/prototype',
-		], [
+], [
 	'action' => 'groups/edit',
 	'attributes' => [
 		'type' => 'group',

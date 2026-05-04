@@ -12,7 +12,7 @@ usort($tools, function ($a, $b) {
 });
 
 foreach ($tools as $tool) {
-	$tool_toggle_name = $tool->name . "_enable";
+	$tool_toggle_name = $tool->name . '_enable';
 	$value = elgg_extract($tool_toggle_name, $values);
 	echo elgg_format_element('div', [], elgg_view('input/checkbox', [
 		'name' => $tool_toggle_name,

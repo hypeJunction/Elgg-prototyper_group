@@ -10,7 +10,7 @@ elgg_require_js('elgg/groups/edit');
 
 $entity = elgg_extract('entity', $vars);
 $subtype = elgg_extract('subtype', $vars);
-$container_guid = elgg_extract('container_guid', $vars) ? : ELGG_ENTITIES_ANY_VALUE;
+$container_guid = elgg_extract('container_guid', $vars) ?: ELGG_ENTITIES_ANY_VALUE;
 
 if (!$subtype) {
 	$subtype = 'default';
@@ -28,7 +28,7 @@ if (!$entity) {
 }
 
 // context needed for input/access view
-elgg_push_context("group-edit");
+elgg_push_context('group-edit');
 
 echo hypePrototyper()->form->with($entity, 'groups/edit')->view(['validate' => true]);
 

@@ -4,6 +4,7 @@ $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggGroup || !$entity->guid) {
 	return;
 }
+
 if ($entity->owner_guid != elgg_get_logged_in_user_guid() && !elgg_is_admin_logged_in()) {
 	return;
 }
@@ -34,5 +35,5 @@ $vars['class'] = 'groups-owner-input';
 echo elgg_view('input/select', $vars);
 
 if ($entity->owner_guid == elgg_get_logged_in_user_guid()) {
-	echo "<span class='elgg-text-help'>" . elgg_echo("groups:owner:warning") . "</span>";
+	echo "<span class='elgg-text-help'>" . elgg_echo('groups:owner:warning') . '</span>';
 }
