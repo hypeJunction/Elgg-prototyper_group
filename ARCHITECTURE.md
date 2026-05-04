@@ -1,4 +1,4 @@
-# prototyper_group — Architecture (Elgg 4.x)
+# prototyper_group — Architecture (Elgg 5.x)
 
 ## Summary
 
@@ -12,19 +12,21 @@ building and saving group profiles.
 ## Plugin metadata
 
 - **Plugin ID**: `prototyper_group`
-- **Type**: Elgg 4.x plugin (no `start.php`)
+- **Type**: Elgg 5.x plugin (no `start.php`)
 - **Direct deps**: `hypeprototyper`
 - **Transitive deps**: `hypeapps`, `hypelists` (via hypeprototyper)
 
 ## Module map
 
 ```
-elgg-plugin.php          Plugin declaration: actions, hooks, view_extensions
+elgg-plugin.php          Plugin declaration: actions, events, upgrades, view_extensions
 actions/
   groups/edit.php        Process group create/edit via hypePrototyper action API
   groups/prototype.php   Admin action: save prototype config for a group subtype
 classes/hypeJunction/Prototyper/Groups/
-  Hooks.php              Hook handlers: getPrototypeFields, getConfigFields
+  Hooks.php              Event handlers: getPrototypeFields, getConfigFields
+  Upgrade/
+    MigratePrototypesToJson.php  Upgrade batch: converts stored serialize() blobs to json_encode()
   NameField.php          AttributeField: assign group name, update ACL name
   MembershipField.php    MetadataField: public/private membership toggle
   VisibilityField.php    MetadataField: group visibility (access_id)
@@ -63,15 +65,18 @@ languages/en.php         English translations
 
 ### Field schema resolution
 
-`Hooks::getPrototypeFields()` (hook: `prototype`, `groups/edit`):
+`Hooks::getPrototypeFields()` (event: `prototype`, `groups/edit`):
 - Reads `prototype:{subtype}` (or `prototype:default`) from plugin settings
-- If found: deserialize and use as the field spec (admin-configured prototype)
+- If found: `json_decode()` (or `unserialize()` fallback for pre-5.x data) and use as the field spec
 - If not: build a default spec from `elgg_get_config('group')` + fixed core fields
 
-## Elgg 4.x migration notes
+## Elgg 5.x migration notes
 
-- No `start.php` — plugin metadata and hook registrations live entirely in `elgg-plugin.php`
-- `Hooks.php` type-hints `\Elgg\Hook` (interface) for plugin hook callbacks — correct for 4.x
+- `'hooks'` key replaced with `'events'` in `elgg-plugin.php` (Elgg 5.x unifies hooks and events)
+- `Hooks.php` type-hints `\Elgg\Event` (concrete class in 5.x, was `\Elgg\Hook` interface in 4.x)
+- `get_current_language()` replaced with `elgg_get_current_language()` (removed in 5.x)
+- Prototype storage migrated from `serialize()` to `json_encode()` — `MigratePrototypesToJson` upgrade batch converts existing data; `Hooks.php` has fallback `unserialize()` for data not yet migrated
+- `unserialize()` calls use `['allowed_classes' => false]` to prevent PHP object injection
+- `elgg_reset_system_cache()` replaced with `elgg_clear_caches()` in install script (removed in 5.x)
+- Docker stack upgraded to PHP 8.2-apache + MySQL 8.0 (`--innodb-use-native-aio=0`); `ELGG_SITE_URL` uses internal Docker hostname `http://elgg/`
 - `elgg_get_config('group')` may return `null` when no custom group fields registered; wrapped with `(array)` cast
-- `getConfigFields` uses `(string)` cast on subtype to satisfy `ElggEntity::setSubtype()` strict string requirement
-- Prototype data stored as `serialize()` — no migration needed (existing data format unchanged)

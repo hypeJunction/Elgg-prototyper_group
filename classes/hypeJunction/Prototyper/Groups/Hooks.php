@@ -26,7 +26,7 @@ class Hooks {
 
 		if ($prototype) {
 			// JSON-encoded since 5.x upgrade; fall back to unserialize for data migrated before the upgrade ran
-			$prototype_fields = json_decode($prototype, true) ?? @unserialize($prototype) ?? [];
+			$prototype_fields = json_decode($prototype, true) ?? @unserialize($prototype, ['allowed_classes' => false]) ?? [];
 			$return = array_merge($return, $prototype_fields);
 		} else {
 			$fields = \elgg_get_config('group');

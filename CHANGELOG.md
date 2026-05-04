@@ -1,3 +1,28 @@
+<a name="5.0.0"></a>
+# 5.0.0 (2026-05-04)
+
+### Breaking Changes
+
+* **Elgg 5.x**: Requires Elgg 5.x and PHP 8.2+. Dropped Elgg 4.x support.
+* **Events API**: `'hooks'` key in `elgg-plugin.php` replaced with `'events'` (Elgg 5.x unifies hooks/events).
+* **Handler type hints**: `\Elgg\Hook` → `\Elgg\Event` in all handler method signatures.
+
+### Features
+
+* **Prototype storage**: Admin-saved prototypes now stored as `json_encode()` instead of `serialize()`. Existing `serialize()` blobs are migrated automatically via the `MigratePrototypesToJson` upgrade batch.
+
+### Bug Fixes
+
+* **`get_current_language()`**: Replaced removed function with `elgg_get_current_language()`.
+* **Visibility view**: Guard `$entity->group_acl` access against null entity in test/render context.
+
+### Infrastructure
+
+* Docker stack updated to PHP 8.2-apache + MySQL 8.0 (`--innodb-use-native-aio=0`).
+* `ELGG_SITE_URL` uses internal Docker hostname `http://elgg/` (required for Elgg 5.x).
+* `elgg_reset_system_cache()` replaced with `elgg_clear_caches()` in install script.
+
+
 <a name="4.0.0"></a>
 # 4.0.0 (2026-04-17)
 

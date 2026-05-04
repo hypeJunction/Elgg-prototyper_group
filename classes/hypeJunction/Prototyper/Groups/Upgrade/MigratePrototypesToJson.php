@@ -70,8 +70,8 @@ class MigratePrototypesToJson extends AsynchronousUpgrade {
 				continue;
 			}
 
-			// Try unserializing
-			$unserialized = @unserialize($value);
+			// Try unserializing — allowed_classes:false prevents PHP object injection
+			$unserialized = @unserialize($value, ['allowed_classes' => false]);
 			if ($unserialized === false && $value !== serialize(false)) {
 				// Not valid serialized data either — leave as-is
 				continue;
