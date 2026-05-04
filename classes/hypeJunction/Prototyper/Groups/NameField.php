@@ -7,7 +7,11 @@ use hypeJunction\Prototyper\Elements\AttributeField;
 
 class NameField extends AttributeField {
 
-	public function handle(ElggEntity $entity) {
+	/**
+     * @param ElggEntity $entity
+     * @return mixed
+     */
+    public function handle(ElggEntity $entity) {
 		$value = get_input($this->getShortname());
 		$value = strip_tags($value);
 

@@ -17,11 +17,17 @@ class ViewsTest extends IntegrationTestCase {
 	public function down() {
 	}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'prototyper_group';
 	}
 
-	public function testPluginViewFilesExist(): void {
+	/**
+     * @return void
+     */
+    public function testPluginViewFilesExist(): void {
 		$base = dirname(__DIR__, 4) . '/views/default';
 		$views = [
 			'forms/groups/edit.php',
@@ -46,7 +52,10 @@ class ViewsTest extends IntegrationTestCase {
 		}
 	}
 
-	public function testGroupDeleteViewRendersWithoutError(): void {
+	/**
+     * @return void
+     */
+    public function testGroupDeleteViewRendersWithoutError(): void {
 		if (!\elgg_view_exists('groups/delete')) {
 			$this->markTestSkipped('groups/delete view not registered (plugin not active in test DB).');
 			return;
@@ -55,7 +64,10 @@ class ViewsTest extends IntegrationTestCase {
 		$this->assertIsString($output);
 	}
 
-	public function testInputMembershipViewRenders(): void {
+	/**
+     * @return void
+     */
+    public function testInputMembershipViewRenders(): void {
 		if (!\elgg_view_exists('input/groups/membership')) {
 			$this->markTestSkipped('input/groups/membership view not registered.');
 			return;
@@ -64,7 +76,10 @@ class ViewsTest extends IntegrationTestCase {
 		$this->assertIsString($output);
 	}
 
-	public function testInputVisibilityViewRenders(): void {
+	/**
+     * @return void
+     */
+    public function testInputVisibilityViewRenders(): void {
 		if (!\elgg_view_exists('input/groups/visibility')) {
 			$this->markTestSkipped('input/groups/visibility view not registered.');
 			return;
@@ -73,7 +88,10 @@ class ViewsTest extends IntegrationTestCase {
 		$this->assertIsString($output);
 	}
 
-	public function testInputToolsViewRenders(): void {
+	/**
+     * @return void
+     */
+    public function testInputToolsViewRenders(): void {
 		if (!\elgg_view_exists('input/groups/tools')) {
 			$this->markTestSkipped('input/groups/tools view not registered.');
 			return;
@@ -82,7 +100,10 @@ class ViewsTest extends IntegrationTestCase {
 		$this->assertIsString($output);
 	}
 
-	public function testLanguagesFileLoadable(): void {
+	/**
+     * @return void
+     */
+    public function testLanguagesFileLoadable(): void {
 		$langFile = dirname(__DIR__, 4) . '/languages/en.php';
 		$this->assertFileExists($langFile);
 		$strings = require $langFile;

@@ -7,7 +7,11 @@ use hypeJunction\Prototyper\Elements\MetadataField;
 
 class ContentAccessModeField extends MetadataField {
 
-	public function getValues(ElggEntity $entity) {
+	/**
+     * @param ElggEntity $entity
+     * @return mixed
+     */
+    public function getValues(ElggEntity $entity) {
 		return $entity->getContentAccessMode();
 	}
 

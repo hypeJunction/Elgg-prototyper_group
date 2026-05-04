@@ -16,11 +16,17 @@ class PluginRegistrationTest extends IntegrationTestCase {
 	public function down() {
 	}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'prototyper_group';
 	}
 
-	public function testElggPluginFileIsValid(): void {
+	/**
+     * @return void
+     */
+    public function testElggPluginFileIsValid(): void {
 		$file = dirname(__DIR__, 4) . '/elgg-plugin.php';
 		$this->assertFileExists($file);
 		$spec = require $file;
@@ -30,14 +36,20 @@ class PluginRegistrationTest extends IntegrationTestCase {
 		$this->assertArrayHasKey('view_extensions', $spec);
 	}
 
-	public function testActionsRegistered(): void {
+	/**
+     * @return void
+     */
+    public function testActionsRegistered(): void {
 		$spec = require dirname(__DIR__, 4) . '/elgg-plugin.php';
 		$this->assertArrayHasKey('groups/prototype', $spec['actions']);
 		$this->assertSame('admin', $spec['actions']['groups/prototype']['access']);
 		$this->assertArrayHasKey('groups/edit', $spec['actions']);
 	}
 
-	public function testHooksRegistered(): void {
+	/**
+     * @return void
+     */
+    public function testHooksRegistered(): void {
 		$spec = require dirname(__DIR__, 4) . '/elgg-plugin.php';
 		$this->assertArrayHasKey('prototype', $spec['hooks']);
 		$this->assertArrayHasKey('groups/edit', $spec['hooks']['prototype']);
@@ -45,17 +57,26 @@ class PluginRegistrationTest extends IntegrationTestCase {
 		$this->assertArrayHasKey('group:group', $spec['hooks']['fields']);
 	}
 
-	public function testViewExtensionRegistered(): void {
+	/**
+     * @return void
+     */
+    public function testViewExtensionRegistered(): void {
 		$spec = require dirname(__DIR__, 4) . '/elgg-plugin.php';
 		$this->assertArrayHasKey('prototyper/elements/submit', $spec['view_extensions']);
 		$this->assertArrayHasKey('groups/delete', $spec['view_extensions']['prototyper/elements/submit']);
 	}
 
-	public function testHooksClassLoadable(): void {
+	/**
+     * @return void
+     */
+    public function testHooksClassLoadable(): void {
 		$this->assertTrue(class_exists(\hypeJunction\Prototyper\Groups\Hooks::class));
 	}
 
-	public function testFieldClassesLoadable(): void {
+	/**
+     * @return void
+     */
+    public function testFieldClassesLoadable(): void {
 		$classes = [
 			\hypeJunction\Prototyper\Groups\NameField::class,
 			\hypeJunction\Prototyper\Groups\MembershipField::class,

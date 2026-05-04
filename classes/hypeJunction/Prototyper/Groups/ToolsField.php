@@ -7,7 +7,11 @@ use hypeJunction\Prototyper\Elements\MetadataField;
 
 class ToolsField extends MetadataField {
 
-	public function getValues(ElggEntity $entity) {
+	/**
+     * @param ElggEntity $entity
+     * @return mixed
+     */
+    public function getValues(ElggEntity $entity) {
 		$values = array();
 		$tools = elgg_get_config('group_tool_options');
 		if ($tools) {

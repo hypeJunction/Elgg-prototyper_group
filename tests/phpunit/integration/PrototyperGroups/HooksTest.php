@@ -22,7 +22,10 @@ class HooksTest extends IntegrationTestCase {
 	public function down() {
 	}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'prototyper_group';
 	}
 
@@ -33,7 +36,10 @@ class HooksTest extends IntegrationTestCase {
 		return new Hook(elgg(), 'prototype', 'groups/edit', $value, $params);
 	}
 
-	public function testGetPrototypeFieldsAddsCoreGroupFields(): void {
+	/**
+     * @return void
+     */
+    public function testGetPrototypeFieldsAddsCoreGroupFields(): void {
 		$group = new \ElggGroup();
 		$hook = $this->makeHook([], ['entity' => $group]);
 
@@ -49,7 +55,10 @@ class HooksTest extends IntegrationTestCase {
 		$this->assertArrayHasKey('tools', $result);
 	}
 
-	public function testGetPrototypeFieldsAssignsExpectedClassNames(): void {
+	/**
+     * @return void
+     */
+    public function testGetPrototypeFieldsAssignsExpectedClassNames(): void {
 		$group = new \ElggGroup();
 		$hook = $this->makeHook([], ['entity' => $group]);
 
@@ -77,7 +86,10 @@ class HooksTest extends IntegrationTestCase {
 		);
 	}
 
-	public function testGetPrototypeFieldsIncludesIconAndDescriptionWhenNoPrototypeStored(): void {
+	/**
+     * @return void
+     */
+    public function testGetPrototypeFieldsIncludesIconAndDescriptionWhenNoPrototypeStored(): void {
 		// Ensure no stored prototype setting for this subtype
 		$plugin = \elgg_get_plugin_from_id('prototyper_group');
 		if ($plugin) {
@@ -98,7 +110,10 @@ class HooksTest extends IntegrationTestCase {
 		$this->assertSame('attribute', $result['description']['data_type']);
 	}
 
-	public function testGetPrototypeFieldsUsesStoredPrototypeWhenPresent(): void {
+	/**
+     * @return void
+     */
+    public function testGetPrototypeFieldsUsesStoredPrototypeWhenPresent(): void {
 		$plugin = \elgg_get_plugin_from_id('prototyper_group');
 		if (!$plugin) {
 			$this->markTestSkipped('prototyper_group plugin not installed in test DB.');
@@ -127,7 +142,10 @@ class HooksTest extends IntegrationTestCase {
 		}
 	}
 
-	public function testGetPrototypeFieldsMergesExistingReturnValue(): void {
+	/**
+     * @return void
+     */
+    public function testGetPrototypeFieldsMergesExistingReturnValue(): void {
 		$group = new \ElggGroup();
 		$hook = $this->makeHook(['preexisting' => ['type' => 'text']], ['entity' => $group]);
 
@@ -137,7 +155,10 @@ class HooksTest extends IntegrationTestCase {
 		$this->assertArrayHasKey('name', $result);
 	}
 
-	public function testGetConfigFieldsReturnsArray(): void {
+	/**
+     * @return void
+     */
+    public function testGetConfigFieldsReturnsArray(): void {
 		if (!function_exists('hypePrototyper')) {
 			$this->markTestSkipped('hypePrototyper plugin not active.');
 			return;

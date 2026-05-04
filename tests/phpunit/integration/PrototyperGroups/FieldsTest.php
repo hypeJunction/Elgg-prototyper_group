@@ -28,53 +28,77 @@ class FieldsTest extends IntegrationTestCase {
 	public function down() {
 	}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'prototyper_group';
 	}
 
-	public function testNameFieldExtendsAttributeField(): void {
+	/**
+     * @return void
+     */
+    public function testNameFieldExtendsAttributeField(): void {
 		$this->assertTrue(is_subclass_of(
 			NameField::class,
 			'hypeJunction\\Prototyper\\Elements\\AttributeField'
 		));
 	}
 
-	public function testMembershipFieldExtendsMetadataField(): void {
+	/**
+     * @return void
+     */
+    public function testMembershipFieldExtendsMetadataField(): void {
 		$this->assertTrue(is_subclass_of(
 			MembershipField::class,
 			'hypeJunction\\Prototyper\\Elements\\MetadataField'
 		));
 	}
 
-	public function testVisibilityFieldExtendsMetadataField(): void {
+	/**
+     * @return void
+     */
+    public function testVisibilityFieldExtendsMetadataField(): void {
 		$this->assertTrue(is_subclass_of(
 			VisibilityField::class,
 			'hypeJunction\\Prototyper\\Elements\\MetadataField'
 		));
 	}
 
-	public function testContentAccessModeFieldExtendsMetadataField(): void {
+	/**
+     * @return void
+     */
+    public function testContentAccessModeFieldExtendsMetadataField(): void {
 		$this->assertTrue(is_subclass_of(
 			ContentAccessModeField::class,
 			'hypeJunction\\Prototyper\\Elements\\MetadataField'
 		));
 	}
 
-	public function testOwnerFieldExtendsAttributeField(): void {
+	/**
+     * @return void
+     */
+    public function testOwnerFieldExtendsAttributeField(): void {
 		$this->assertTrue(is_subclass_of(
 			OwnerField::class,
 			'hypeJunction\\Prototyper\\Elements\\AttributeField'
 		));
 	}
 
-	public function testToolsFieldExtendsMetadataField(): void {
+	/**
+     * @return void
+     */
+    public function testToolsFieldExtendsMetadataField(): void {
 		$this->assertTrue(is_subclass_of(
 			ToolsField::class,
 			'hypeJunction\\Prototyper\\Elements\\MetadataField'
 		));
 	}
 
-	public function testNameFieldStripsTagsAndAssignsName(): void {
+	/**
+     * @return void
+     */
+    public function testNameFieldStripsTagsAndAssignsName(): void {
 		$group = new \ElggGroup();
 		$field = $this->getMockBuilder(NameField::class)
 			->disableOriginalConstructor()
@@ -90,7 +114,10 @@ class FieldsTest extends IntegrationTestCase {
 		$this->assertSame('Test Group Name', $group->name);
 	}
 
-	public function testMembershipFieldHandleSetsPublicMembership(): void {
+	/**
+     * @return void
+     */
+    public function testMembershipFieldHandleSetsPublicMembership(): void {
 		$group = new \ElggGroup();
 		$field = $this->getMockBuilder(MembershipField::class)
 			->disableOriginalConstructor()
@@ -105,7 +132,10 @@ class FieldsTest extends IntegrationTestCase {
 		$this->assertEquals(ACCESS_PUBLIC, $group->membership);
 	}
 
-	public function testMembershipFieldHandleSetsPrivateForNonPublic(): void {
+	/**
+     * @return void
+     */
+    public function testMembershipFieldHandleSetsPrivateForNonPublic(): void {
 		$group = new \ElggGroup();
 		$field = $this->getMockBuilder(MembershipField::class)
 			->disableOriginalConstructor()
@@ -120,7 +150,10 @@ class FieldsTest extends IntegrationTestCase {
 		$this->assertEquals(ACCESS_PRIVATE, $group->membership);
 	}
 
-	public function testContentAccessModeFieldHandleSetsMode(): void {
+	/**
+     * @return void
+     */
+    public function testContentAccessModeFieldHandleSetsMode(): void {
 		$group = $this->createGroup();
 		$field = $this->getMockBuilder(ContentAccessModeField::class)
 			->disableOriginalConstructor()
@@ -138,7 +171,10 @@ class FieldsTest extends IntegrationTestCase {
 		);
 	}
 
-	public function testOwnerFieldHandleNoOpForUnsavedEntity(): void {
+	/**
+     * @return void
+     */
+    public function testOwnerFieldHandleNoOpForUnsavedEntity(): void {
 		$group = new \ElggGroup();
 		$field = $this->getMockBuilder(OwnerField::class)
 			->disableOriginalConstructor()
