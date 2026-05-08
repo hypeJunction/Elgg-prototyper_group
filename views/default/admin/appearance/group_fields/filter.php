@@ -21,7 +21,7 @@ foreach ($group_subtypes as $subtype) {
 	elgg_register_menu_item('filter', [
 		'name' => $subtype,
 		'text' => $subtype === 'default' ? elgg_echo('groups:fields:default') : elgg_echo("item:group:$subtype"),
-		'href' => elgg_http_add_url_query_elements(current_page_url(), [
+		'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 			'subtype' => $subtype,
 		]),
 		'selected' => $subtype == $context,
