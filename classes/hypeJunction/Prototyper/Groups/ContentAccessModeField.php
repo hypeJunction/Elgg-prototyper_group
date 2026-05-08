@@ -15,7 +15,9 @@ class ContentAccessModeField extends MetadataField {
 	 * @return mixed
 	 */
 	public function getValues(ElggEntity $entity) {
-		return $entity->getContentAccessMode();
+		$md = new \stdClass();
+		$md->value = $entity->getContentAccessMode();
+		return [$md];
 	}
 
 	/**

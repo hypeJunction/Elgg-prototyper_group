@@ -1,15 +1,15 @@
 <?php
 
-$guid = get_input('guid');
-$group = get_entity($guid);
+$guid = (int) get_input('guid');
+$group = $guid ? get_entity($guid) : null;
 
 if (!$group instanceof ElggGroup && elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !elgg_get_logged_in_user_entity()->isAdmin()) {
 	return elgg_error_response(elgg_echo('groups:cantcreate'));
 }
 
 if (!$group instanceof ElggGroup) {
-	$subtype = get_input('subtype') ?: ELGG_ENTITIES_ANY_VALUE;
-	$container_guid = get_input('container_guid') ?: elgg_get_logged_in_user_guid();
+	$subtype = (string) (get_input('subtype') ?: 'group');
+	$container_guid = (int) (get_input('container_guid') ?: elgg_get_logged_in_user_guid());
 	$group = hypePrototyper()->entityFactory->build([
 		'type' => 'group',
 		'subtype' => $subtype,

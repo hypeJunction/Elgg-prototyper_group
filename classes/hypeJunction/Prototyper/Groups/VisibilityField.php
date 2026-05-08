@@ -15,7 +15,9 @@ class VisibilityField extends MetadataField {
 	 * {@inheritdoc}
 	 */
 	public function getValues(ElggEntity $entity) {
-		return $entity->access_id;
+		$md = new \stdClass();
+		$md->value = $entity->access_id;
+		return [$md];
 	}
 
 	/**

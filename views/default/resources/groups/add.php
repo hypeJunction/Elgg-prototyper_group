@@ -4,9 +4,9 @@ elgg_gatekeeper();
 
 $container_guid = (int) elgg_extract('guid', $vars);
 $container = $container_guid ? get_entity($container_guid) : null;
-$subtype = elgg_extract('subtype', $vars) ?: ELGG_ENTITIES_ANY_VALUE;
+$subtype = (string) (elgg_extract('subtype', $vars) ?? '');
 
-if ($container && !$container->canWriteToContainer(0, 'group', $subtype)) {
+if ($container && $subtype !== '' && !$container->canWriteToContainer(0, 'group', $subtype)) {
 	throw new \Elgg\Exceptions\HttpException(elgg_echo('groups:noaccess'), 403);
 }
 
