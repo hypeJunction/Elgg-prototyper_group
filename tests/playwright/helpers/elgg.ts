@@ -14,7 +14,7 @@ export async function loginAs(page: Page, username: string, password: string = '
   await page.fill('.elgg-module-aside input[name="username"]', username);
   await page.fill('.elgg-module-aside input[name="password"]', password);
   await page.click('.elgg-module-aside button[type="submit"]');
-  await page.waitForURL(/\//);
+  await page.waitForURL((url) => !url.toString().includes('/login'));
 }
 
 export async function queryDb(sql: string, params: any[] = []) {
@@ -28,8 +28,8 @@ export async function getGroupByName(name: string) {
   const rows = await queryDb(
     `SELECT e.guid, e.type, e.subtype, e.owner_guid, e.access_id
      FROM elgg_entities e
-     JOIN elgg_groups_entity g ON g.guid = e.guid
-     WHERE g.name = ?
+     JOIN elgg_metadata m ON m.entity_guid = e.guid
+     WHERE e.type = 'group' AND m.name = 'name' AND m.value = ?
      ORDER BY e.guid DESC
      LIMIT 1`,
     [name]

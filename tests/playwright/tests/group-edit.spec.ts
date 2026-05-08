@@ -23,7 +23,7 @@ test.describe('prototyper_group — group form', () => {
     expect(response?.status()).toBeLessThan(400);
 
     // The prototyper-driven form should be on the page
-    await expect(page.locator('form')).toBeVisible();
+    await expect(page.locator('form[action*="groups/edit"]')).toBeVisible();
     // Core fields rendered by the Hooks handler
     await expect(page.locator('input[name="name"]')).toBeVisible();
   });
@@ -45,10 +45,10 @@ test.describe('prototyper_group — group form', () => {
       await description.fill('Automated test group for prototyper_group.');
     }
 
-    await page.click('form button[type="submit"], form input[type="submit"]');
+    await page.locator('form[action*="groups/edit"] button[type="submit"], form[action*="groups/edit"] input[type="submit"]').first().click();
 
     // Allow redirect
-    await page.waitForLoadState('networkidle');
+    await page.waitForURL((url) => !url.toString().includes('/groups/add'));
 
     // Assert DB: group exists with our name
     const group = await getGroupByName(uniqueName);
