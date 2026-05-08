@@ -137,6 +137,21 @@ SETTINGS_VALUES
 
         // Clear caches after all activations (5.x: use elgg_clear_caches).
         elgg_clear_caches();
+
+        // Create a non-admin testuser for E2E tests.
+        if (!elgg_get_user_by_username('testuser')) {
+            try {
+                elgg_register_user([
+                    'username' => 'testuser',
+                    'password' => 'testpass123',
+                    'name' => 'Test User',
+                    'email' => 'testuser@example.com',
+                ]);
+                echo 'Test user created.' . PHP_EOL;
+            } catch (\Throwable \$e) {
+                echo 'WARNING: could not create testuser: ' . \$e->getMessage() . PHP_EOL;
+            }
+        }
     " 2>&1 || echo "Plugin activation completed (check for errors above)."
 
     # Hand the data root over to the Apache user. The installer ran as

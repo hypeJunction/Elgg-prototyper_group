@@ -1,5 +1,15 @@
 import { test, expect } from '@playwright/test';
-import { loginAs, getGroupByName, getMetadata } from '../helpers/elgg';
+import { loginAs, getGroupByName, getMetadata, queryDb } from '../helpers/elgg';
+
+async function getAdminGuid(): Promise<number> {
+  const rows = await queryDb(
+    `SELECT e.guid FROM elgg_entities e
+     JOIN elgg_metadata m ON m.entity_guid = e.guid
+     WHERE e.type = 'user' AND m.name = 'username' AND m.value = 'admin'
+     LIMIT 1`
+  );
+  return rows[0]?.guid ?? 1;
+}
 
 /**
  * Tests for the group create/edit form which is driven
@@ -7,8 +17,9 @@ import { loginAs, getGroupByName, getMetadata } from '../helpers/elgg';
  */
 test.describe('prototyper_group — group form', () => {
   test('group add page renders form', async ({ page }) => {
+    const adminGuid = await getAdminGuid();
     await loginAs(page, 'admin');
-    const response = await page.goto('/groups/add');
+    const response = await page.goto(`/groups/add/${adminGuid}`);
     expect(response?.status()).toBeLessThan(400);
 
     // The prototyper-driven form should be on the page
@@ -19,9 +30,10 @@ test.describe('prototyper_group — group form', () => {
 
   test('admin creates a group via prototyper form and DB reflects it', async ({ page }) => {
     const uniqueName = 'PG Test Group ' + Date.now();
+    const adminGuid = await getAdminGuid();
 
     await loginAs(page, 'admin');
-    await page.goto('/groups/add');
+    await page.goto(`/groups/add/${adminGuid}`);
 
     await page.fill('input[name="name"]', uniqueName);
 
