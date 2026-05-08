@@ -45,7 +45,9 @@ test.describe('prototyper_group — group form', () => {
       await description.fill('Automated test group for prototyper_group.');
     }
 
-    await page.locator('form[action*="groups/edit"] button[type="submit"], form[action*="groups/edit"] input[type="submit"]').first().click();
+    const submitBtn = page.locator('form[action*="groups/edit"] button[type="submit"], form[action*="groups/edit"] input[type="submit"]').first();
+    await submitBtn.scrollIntoViewIfNeeded();
+    await submitBtn.click({ force: true });
 
     // Allow redirect
     await page.waitForURL((url) => !url.toString().includes('/groups/add'));
