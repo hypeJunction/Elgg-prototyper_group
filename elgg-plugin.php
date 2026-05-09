@@ -2,7 +2,7 @@
 
 return [
 	'plugin' => [
-		'version' => '5.0.0',
+		'version' => '7.0.0',
 		'dependencies' => [
 			'hypeprototyper' => [
 				'position' => 'after',
