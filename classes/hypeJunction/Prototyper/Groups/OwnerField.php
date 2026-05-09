@@ -5,6 +5,9 @@ namespace hypeJunction\Prototyper\Groups;
 use ElggEntity;
 use hypeJunction\Prototyper\Elements\AttributeField;
 
+/**
+ * Group owner field handler.
+ */
 class OwnerField extends AttributeField {
 
 	/**
@@ -79,5 +82,4 @@ class OwnerField extends AttributeField {
 
 		return $entity;
 	}
-
 }

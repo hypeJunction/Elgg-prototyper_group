@@ -1,10 +1,10 @@
 <?php
 
 $access_mode_params = [
-	"id" => "groups-content-access-mode",
-	"options_values" => [
-		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo("groups:content_access_mode:unrestricted"),
-		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo("groups:content_access_mode:membersonly"),
+	'id' => 'groups-content-access-mode',
+	'options_values' => [
+		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
 	]
 ];
 
@@ -19,11 +19,11 @@ if ($entity->guid) {
 }
 
 $vars = array_merge($vars, $access_mode_params);
-echo elgg_view("input/select", $vars);
+echo elgg_view('input/select', $vars);
 
 if ($entity && $entity->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
 	// Warn the user that changing the content access mode to more
 	// restrictive will not affect the existing group content
-	$access_mode_warning = elgg_echo("groups:content_access_mode:warning");
+	$access_mode_warning = elgg_echo('groups:content_access_mode:warning');
 	echo "<span class='elgg-text-help'>$access_mode_warning</span>";
 }

@@ -6,11 +6,11 @@
  * @package ElggGroups
  */
 
-elgg_require_js('elgg/groups/edit');
+elgg_import_esm('elgg/groups/edit');
 
 $entity = elgg_extract('entity', $vars);
 $subtype = elgg_extract('subtype', $vars);
-$container_guid = elgg_extract('container_guid', $vars) ? : ELGG_ENTITIES_ANY_VALUE;
+$container_guid = elgg_extract('container_guid', $vars) ?: ELGG_ENTITIES_ANY_VALUE;
 
 if (!$subtype) {
 	$subtype = 'default';
@@ -19,16 +19,16 @@ if (!$subtype) {
 if (!$entity) {
 	$entity = hypePrototyper()->entityFactory->build([
 		'type' => 'group',
-		'subtype' => $subtype == 'default' ? ELGG_ENTITIES_ANY_VALUE : $subtype,
-		'container_guid' => $container_guid,
-		'access_id' => get_default_access(),
+		'subtype' => ($subtype === 'default' || $subtype === '') ? 'group' : (string) $subtype,
+		'container_guid' => $container_guid ?: elgg_get_logged_in_user_guid(),
+		'access_id' => elgg_get_default_access(),
 		'membership' => ACCESS_PUBLIC,
 	]);
 	$entity->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
 }
 
 // context needed for input/access view
-elgg_push_context("group-edit");
+elgg_push_context('group-edit');
 
 echo hypePrototyper()->form->with($entity, 'groups/edit')->view(['validate' => true]);
 

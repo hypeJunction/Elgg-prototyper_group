@@ -3,10 +3,10 @@
 $subtype = get_input('subtype', 'default');
 $prototype = hypePrototyper()->ui->buildPrototypeFromInput();
 
-if ($prototype && elgg_set_plugin_setting("prototype:$subtype", serialize($prototype), 'prototyper_group')) {
-	system_message(elgg_echo('groups:prototype:success'));
+if ($prototype) {
+	$plugin = elgg_get_plugin_from_id('prototyper_group');
+	$plugin->setSetting("prototype:$subtype", json_encode($prototype));
+	return elgg_ok_response('', elgg_echo('groups:prototype:success'));
 } else {
-	register_error(elgg_echo('groups:prototype:error'));
+	return elgg_error_response(elgg_echo('groups:prototype:error'));
 }
-
-forward(REFERER);

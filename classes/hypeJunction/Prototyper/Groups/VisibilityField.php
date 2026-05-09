@@ -6,13 +6,18 @@ use ElggEntity;
 use ElggGroup;
 use hypeJunction\Prototyper\Elements\MetadataField;
 
+/**
+ * Group visibility field handler.
+ */
 class VisibilityField extends MetadataField {
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function getValues(ElggEntity $entity) {
-		return $entity->access_id;
+		$md = new \stdClass();
+		$md->value = $entity->access_id;
+		return [$md];
 	}
 
 	/**
@@ -20,9 +25,10 @@ class VisibilityField extends MetadataField {
 	 */
 	public function validate(ElggEntity $entity) {
 		$result = parent::validate($entity);
-		if (get_input($this->getShortname()) == ACCESS_PRIVATE && elgg_get_plugin_setting("hidden_groups", "groups") != "yes") {
+		if (get_input($this->getShortname()) == ACCESS_PRIVATE && elgg_get_plugin_setting('hidden_groups', 'groups') != 'yes') {
 			$result->setFail(elgg_echo('groups:hidden_groups_disabled'));
 		}
+
 		return $result;
 	}
 
@@ -47,5 +53,4 @@ class VisibilityField extends MetadataField {
 		$entity->access_id = $visibility;
 		return $entity;
 	}
-
 }
