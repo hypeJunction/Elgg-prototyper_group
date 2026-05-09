@@ -1,3 +1,10 @@
+## Elgg 6.x Migration (2026-05-09)
+
+- Bumped `elgg/elgg` to `~6.1.0`, `php` to `>=8.1`, added `ext-intl`
+- `elgg_require_js('elgg/groups/edit')` → `elgg_import_esm('elgg/groups/edit')` in forms/groups/edit.php
+- Added docker/elgg6/ test stack
+- No data migration needed
+
 <a name="5.0.0"></a>
 # 5.0.0 (2026-05-04)
 

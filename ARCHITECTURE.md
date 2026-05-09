@@ -1,4 +1,4 @@
-# prototyper_group — Architecture (Elgg 5.x)
+# prototyper_group — Architecture (Elgg 6.x)
 
 ## Summary
 

@@ -6,7 +6,7 @@
  * @package ElggGroups
  */
 
-elgg_require_js('elgg/groups/edit');
+elgg_import_esm('elgg/groups/edit');
 
 $entity = elgg_extract('entity', $vars);
 $subtype = elgg_extract('subtype', $vars);
