@@ -1,4 +1,4 @@
-# prototyper_group — Architecture (Elgg 6.x)
+# prototyper_group — Architecture (Elgg 7.x)
 
 ## Summary
 
@@ -69,6 +69,20 @@ languages/en.php         English translations
 - Reads `prototype:{subtype}` (or `prototype:default`) from plugin settings
 - If found: `json_decode()` (or `unserialize()` fallback for pre-5.x data) and use as the field spec
 - If not: build a default spec from `elgg_get_config('group')` + fixed core fields
+
+## Migration Notes (6.x → 7.x)
+
+- `elgg/elgg ~7.0.0`, `php >=8.3` in `composer.json`.
+- Docker test stack added for Elgg 7.x (docker/elgg7/) with PHP 8.3.
+- No breaking changes: no CSS Crush syntax, no direct `ElggObject` instantiation, no removed Elgg APIs.
+- No data migration needed.
+
+## Migration Notes (5.x → 6.x)
+
+- `elgg/elgg ~6.1.0`, `php >=8.1`, `ext-intl` added in `composer.json`.
+- `elgg_require_js('elgg/groups/edit')` → `elgg_import_esm('elgg/groups/edit')` in forms/groups/edit.php.
+- Docker test stack added for Elgg 6.x (docker/elgg6/).
+- No data migration needed.
 
 ## Elgg 5.x migration notes
 
