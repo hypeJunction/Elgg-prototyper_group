@@ -115,8 +115,8 @@ class HooksTest extends IntegrationTestCase {
      */
     public function testGetPrototypeFieldsUsesStoredPrototypeWhenPresent(): void {
 		$plugin = \elgg_get_plugin_from_id('prototyper_group');
-		if (!$plugin) {
-			$this->markTestSkipped('prototyper_group plugin not installed in test DB.');
+		if (!$plugin || !$plugin->isActive()) {
+			$this->markTestSkipped('prototyper_group plugin not active (deps may not be migrated to 7.x yet).');
 			return;
 		}
 
