@@ -70,6 +70,10 @@ languages/en.php         English translations
 - If found: `json_decode()` (or `unserialize()` fallback for pre-5.x data) and use as the field spec
 - If not: build a default spec from `elgg_get_config('group')` + fixed core fields
 
+## Seeding
+
+No seeder required. This plugin owns no entity types, subtypes, or persistent relationship schemas — it is a pure UI/utility/admin plugin with no persisted entity surface of its own.
+
 ## Migration Notes (6.x → 7.x)
 
 - `elgg/elgg ~7.0.0`, `php >=8.3` in `composer.json`.
