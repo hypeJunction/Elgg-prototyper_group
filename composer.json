@@ -1,47 +1,47 @@
 {
-	"name": "hypejunction/prototyper_group",
-	"version": "7.0.0",
-	"type": "elgg-plugin",
-	"description": "hypePrototyper integration for Elgg group profiles",
-	"homepage": "https://github.com/hypeJunction/Elgg-prototyper_group",
-	"keywords": [
-		"elgg",
-		"plugin",
-		"profile",
-		"groups",
-		"form builder",
-		"prototyper"
-	],
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
-		}
-	],
-	"require-dev": {
-		"composer/installers": "^1.0 || ^2.0"
-	},
-	"extra": {
-		"installer-name": "prototyper_group",
-		"elgg-plugin": {
-			"id": "prototyper_group"
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
-		}
-	},
-	"require": {
-		"php": ">=8.3",
-		"ext-intl": "*",
-		"elgg/elgg": "~7.0.0",
-		"composer/installers": "^2.0"
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		}
-	}
+    "name": "hypejunction/prototyper_group",
+    "version": "7.0.0",
+    "type": "elgg-plugin",
+    "description": "hypePrototyper integration for Elgg group profiles",
+    "homepage": "https://github.com/hypeJunction/Elgg-prototyper_group",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "profile",
+        "groups",
+        "form builder",
+        "prototyper"
+    ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "extra": {
+        "installer-name": "prototyper_group",
+        "elgg-plugin": {
+            "id": "prototyper_group"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
+        }
+    },
+    "require": {
+        "php": ">=8.3",
+        "ext-intl": "*",
+        "elgg/elgg": "~7.0.0",
+        "composer/installers": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
