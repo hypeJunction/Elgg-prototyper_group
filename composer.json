@@ -1,47 +1,47 @@
 {
-	"name": "hypejunction/prototyper_group",
-	"version": "5.0.0",
-	"type": "elgg-plugin",
-	"description": "hypePrototyper integration for Elgg group profiles",
-	"homepage": "https://github.com/hypeJunction/Elgg-prototyper_group",
-	"keywords": [
-		"elgg",
-		"plugin",
-		"profile",
-		"groups",
-		"form builder",
-		"prototyper"
-	],
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
-		}
-	],
-	"require-dev": {
-		"composer/installers": "^1.0 || ^2.0"
-	},
-	"extra": {
-		"installer-name": "prototyper_group",
-		"elgg-plugin": {
-			"id": "prototyper_group"
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
-		}
-	},
-	"require": {
-		"composer/installers": "^2.0",
-		"php": ">=8.1",
-		"elgg/elgg": "~6.1.0",
-		"ext-intl": "*"
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		}
-	}
+    "name": "hypejunction/prototyper_group",
+    "version": "6.0.0",
+    "type": "elgg-plugin",
+    "description": "hypePrototyper integration for Elgg group profiles",
+    "homepage": "https://github.com/hypeJunction/Elgg-prototyper_group",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "profile",
+        "groups",
+        "form builder",
+        "prototyper"
+    ],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "extra": {
+        "installer-name": "prototyper_group",
+        "elgg-plugin": {
+            "id": "prototyper_group"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "hypeJunction\\Prototyper\\Groups\\": "classes/hypeJunction/Prototyper/Groups/"
+        }
+    },
+    "require": {
+        "composer/installers": "^2.0",
+        "php": ">=8.1",
+        "elgg/elgg": "~6.1.0",
+        "ext-intl": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
