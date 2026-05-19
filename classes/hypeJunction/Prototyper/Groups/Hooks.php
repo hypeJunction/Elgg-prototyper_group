@@ -35,7 +35,7 @@ class Hooks {
 				'type' => 'icon',
 				'data_type' => 'file',
 				'label' => [
-					\elgg_get_current_language() => \elgg_echo('groups:icon'),
+					\elgg_elgg_get_language() => \elgg_echo('groups:icon'),
 				],
 				'help' => false,
 			];
@@ -44,7 +44,7 @@ class Hooks {
 				'type' => 'description',
 				'data_type' => 'attribute',
 				'label' => [
-					\elgg_get_current_language() => \elgg_echo('groups:description'),
+					\elgg_elgg_get_language() => \elgg_echo('groups:description'),
 				],
 				'help' => false,
 			];
@@ -54,7 +54,7 @@ class Hooks {
 					'type' => $input_type,
 					'data_type' => 'metadata',
 					'label' => [
-						\elgg_get_current_language() => \elgg_echo("groups:$shortname"),
+						\elgg_elgg_get_language() => \elgg_echo("groups:$shortname"),
 					],
 					'help' => false,
 				];
@@ -66,7 +66,7 @@ class Hooks {
 			'data_type' => 'attribute',
 			'class_name' => NameField::class,
 			'label' => [
-				\elgg_get_current_language() => \elgg_echo('groups:name'),
+				\elgg_elgg_get_language() => \elgg_echo('groups:name'),
 			],
 			'help' => false,
 			'priority' => 1,
@@ -80,7 +80,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => MembershipField::class,
 			'label' => [
-				\elgg_get_current_language() => \elgg_echo('groups:membership'),
+				\elgg_elgg_get_language() => \elgg_echo('groups:membership'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -94,7 +94,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => VisibilityField::class,
 			'label' => [
-				\elgg_get_current_language() => \elgg_echo('groups:visibility'),
+				\elgg_elgg_get_language() => \elgg_echo('groups:visibility'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -108,7 +108,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => ContentAccessModeField::class,
 			'label' => [
-				\elgg_get_current_language() => \elgg_echo('groups:content_access_mode'),
+				\elgg_elgg_get_language() => \elgg_echo('groups:content_access_mode'),
 			],
 			'help' => false,
 			'priority' => 900,
@@ -121,7 +121,7 @@ class Hooks {
 			'output_view' => false,
 			'class_name' => OwnerField::class,
 			'label' => [
-				\elgg_get_current_language() => \elgg_echo('groups:owner'),
+				\elgg_elgg_get_language() => \elgg_echo('groups:owner'),
 			],
 			'help' => false,
 			'priority' => 900,
