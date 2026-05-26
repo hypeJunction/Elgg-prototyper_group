@@ -25,7 +25,7 @@ class OwnerField extends AttributeField {
 			return $entity;
 		}
 
-		$user = elgg_get_logged_in_user_entity();
+		$user = \elgg_get_logged_in_user_entity();
 
 		// verify new owner is member and old owner/admin is logged in
 		if ($entity->isMember(get_user($new_owner_guid)) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
@@ -38,7 +38,7 @@ class OwnerField extends AttributeField {
 				$entity->container_guid = $new_owner_guid;
 			}
 
-			$metadata = elgg_get_metadata([
+			$metadata = \elgg_get_metadata([
 				'guid' => $entity->guid,
 				'limit' => false,
 			]);

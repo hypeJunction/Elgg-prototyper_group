@@ -9,7 +9,7 @@ class ToolsField extends MetadataField {
 
 	public function getValues(ElggEntity $entity) {
 		$values = array();
-		$tools = elgg_get_config('group_tool_options');
+		$tools = \elgg_get_config('group_tool_options');
 		if ($tools) {
 			foreach ($tools as $tool) {
 				$option_name = $tool->name . "_enable";
@@ -29,7 +29,7 @@ class ToolsField extends MetadataField {
 	 */
 	public function handle(ElggEntity $entity) {
 		// Set group tool options
-		$tools = elgg_get_config('group_tool_options');
+		$tools = \elgg_get_config('group_tool_options');
 		if ($tools) {
 			foreach ($tools as $tool) {
 				$option_toggle_name = $tool->name . "_enable";

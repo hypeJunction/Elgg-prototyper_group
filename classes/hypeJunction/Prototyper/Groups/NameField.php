@@ -13,7 +13,7 @@ class NameField extends AttributeField {
 
 		if ($entity->guid && $value != $entity->name) {
 			$entity_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-			$ac_name = elgg_echo('groups:group') . ": " . $entity_name;
+			$ac_name = \elgg_echo('groups:group') . ": " . $entity_name;
 			$acl = $entity->getOwnedAccessCollection('group_acl');
 			if ($acl) {
 				$acl->name = $ac_name;
