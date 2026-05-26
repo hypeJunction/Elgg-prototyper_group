@@ -46,7 +46,7 @@ class MigratePrototypesToJson extends AsynchronousUpgrade {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		$plugin = elgg_get_plugin_from_id('prototyper_group');
+		$plugin = \elgg_get_plugin_from_id('prototyper_group');
 		if (!$plugin) {
 			$result->addSuccesses(1);
 			return $result;

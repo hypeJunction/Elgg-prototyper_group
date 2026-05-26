@@ -25,8 +25,8 @@ class VisibilityField extends MetadataField {
 	 */
 	public function validate(ElggEntity $entity) {
 		$result = parent::validate($entity);
-		if (get_input($this->getShortname()) == ACCESS_PRIVATE && elgg_get_plugin_setting('hidden_groups', 'groups') != 'yes') {
-			$result->setFail(elgg_echo('groups:hidden_groups_disabled'));
+		if (get_input($this->getShortname()) == ACCESS_PRIVATE && \elgg_get_plugin_setting('hidden_groups', 'groups') != 'yes') {
+			$result->setFail(\elgg_echo('groups:hidden_groups_disabled'));
 		}
 
 		return $result;
