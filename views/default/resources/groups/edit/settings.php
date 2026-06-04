@@ -7,7 +7,7 @@ $title = elgg_echo('groups:edit');
 $group = get_entity($guid);
 
 if (!$group instanceof ElggGroup || !$group->canEdit()) {
-	elgg_register_error_message(elgg_echo('groups:noaccess'));
+	register_error(elgg_echo('groups:noaccess'));
 	return;
 }
 

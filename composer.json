@@ -1,6 +1,6 @@
 {
     "name": "hypejunction/prototyper_group",
-    "version": "6.0.0",
+    "version": "6.0.1",
     "type": "elgg-plugin",
     "description": "hypePrototyper integration for Elgg group profiles",
     "homepage": "https://github.com/hypeJunction/Elgg-prototyper_group",
