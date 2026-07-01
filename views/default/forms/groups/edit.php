@@ -6,7 +6,7 @@
  * @package ElggGroups
  */
 
-elgg_import_esm('elgg/groups/edit');
+elgg_import_esm('groups/edit/access');
 
 $entity = elgg_extract('entity', $vars);
 $subtype = elgg_extract('subtype', $vars);
