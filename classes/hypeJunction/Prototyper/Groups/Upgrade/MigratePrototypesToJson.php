@@ -24,8 +24,14 @@ class MigratePrototypesToJson extends AsynchronousUpgrade {
 	/**
 	 * {@inheritdoc}
 	 */
+	// Elgg only treats a needsIncrementOffset() === false batch as finished when
+	// countItems() SHRINKS to zero (Upgrade\Loop::isCompleted). countItems() here
+	// is a constant, so returning false made the runner call run() forever — the
+	// upgrade never completed, and every later upgrade (including core's
+	// MigratePageTop) stayed pending behind it. run() does all of its work in one
+	// pass, so let the loop finish on processed >= count instead.
 	public function needsIncrementOffset(): bool {
-		return false;
+		return true;
 	}
 
 	/**
@@ -52,36 +58,29 @@ class MigratePrototypesToJson extends AsynchronousUpgrade {
 			return $result;
 		}
 
-		$db = elgg()->db;
-		$prefix = $db->prefix;
-
-		// Find all prototype:* settings for this plugin
-		$rows = $db->getConnection('read')->executeQuery(
-			"SELECT id, name, value FROM {$prefix}private_settings
-			 WHERE entity_guid = ? AND name LIKE 'prototype:%'",
-			[$plugin->guid]
-		)->fetchAllAssociative();
-
-		foreach ($rows as $row) {
-			$value = $row['value'];
-
-			// Already JSON — skip
-			if ($value !== null && $value !== '' && json_decode($value, true) !== null) {
+		// Elgg 4 removed the private_settings table and moved plugin settings into
+		// metadata. Querying it threw, the batch was recorded as failed, and Elgg
+		// rejected the whole upgrade promise — every upgrade behind it, including
+		// core's MigratePageTop, stayed pending. Read the settings where they live.
+		foreach ($plugin->getAllMetadata() as $name => $value) {
+			if (!str_starts_with((string) $name, 'prototype:') || !is_string($value)) {
 				continue;
 			}
 
-			// Try unserializing — allowed_classes:false prevents PHP object injection
+			// Already JSON — nothing to migrate.
+			json_decode($value, true);
+			if (json_last_error() === JSON_ERROR_NONE) {
+				continue;
+			}
+
+			// allowed_classes: false prevents PHP object injection.
 			$unserialized = @unserialize($value, ['allowed_classes' => false]);
 			if ($unserialized === false && $value !== serialize(false)) {
-				// Not valid serialized data either — leave as-is
+				// Neither JSON nor serialized — leave it alone.
 				continue;
 			}
 
-			$json = json_encode($unserialized);
-			$db->getConnection('write')->executeStatement(
-				"UPDATE {$prefix}private_settings SET value = ? WHERE id = ?",
-				[$json, $row['id']]
-			);
+			$plugin->setMetadata($name, json_encode($unserialized));
 		}
 
 		$result->addSuccesses(1);
